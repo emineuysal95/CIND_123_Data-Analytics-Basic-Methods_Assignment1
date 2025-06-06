@@ -1,0 +1,217 @@
+---
+title: "ASSIGNMENT1"
+author: "Emine Uysal"
+date: "2024-07-10"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+##                                          CIND 123
+##                                Data Analytics: Basic Methods
+###                                      Assignment 1 (10%)
+
+
+[Student number:501304049]
+                                      
+####                                      INSTRUCTIONS
+
+This assignment can be submitted using either Python or R, whichever you prefer.
+If using R, you must submit an RMD file with its knitted file (PDF or HTML). To learn more about knitting and R markdown, visit R Markdown.
+If using Python, you must submit an IPYNB file and its exported PDF/HTML with clearly printed/shown answers.
+Failing to submit both files ({RMD + knitted PDF/HTML} OR {IPYNB + PDF/HTML}) will be subject to a 30% mark deduction.
+
+NOTE: IF YOU USE R STUDIO , YOU SHOULD NEVER HAVE install.packages IN YOUR CODE; OTHERWISE, THE Knit OPTION WILL RAISE AN ERROR.
+COMMENT OUT ALL PACKAGE INSTALLATIONS BUT KEEP library() CALLS.
+
+NOTE: If you answer the questions in R, all your answers should be in R (ignore Python questions). If you answer the questions in Python, all your answers should be
+in Python (ignore R questions). You are not allowed to switch languages in this assignment.
+
+#Question 1 (50 points)
+
+##Q1a (15 points)
+
+Create and print a vector x (or list in Python) with all odd numbers from 5 to 120 and a vector y containing multiples of 5 in the same range.
+
+HINT: use seq() in R or range() in Python.
+
+```{r}
+x <- seq(5, 120, by = 2)
+print(x)
+y <- seq(5, 120, by = 5)
+print(y)
+```
+
+Calculate the sum of the lengths of the vectors x and y .
+
+HINT: use length() in R or len() in Python.
+
+```{r}
+length_x <- length(x)
+length_y <- length(y)
+sum_length <- length_x + length_y
+print(sum_length)
+```
+##Q1b (15 points)
+
+Create a new vector (or list in Python), y_cube , with the cube of elements at indices 2, 4, 6, 10, 15, 18, 21, and 25 from the variable y .
+
+HINT: Use indexing rather than a for loop.
+
+```{r}
+# Example vector y (ensure it has at least 25 elements)
+y <- 1:30
+# Specified indices
+indices <- c(2, 4, 6, 10, 15, 18, 21, 25)
+# Create y_cube by cubing the elements at the specified indices
+y_cube <- y[indices]^3
+# Print y_cube to see the result
+print(y_cube)
+
+```
+Calculate the mean and median of the LAST five values from y_cube .
+
+```{r}
+mean_last_five <- mean(y_cube[(length(y_cube)-4):length(y_cube)])
+print(mean_last_five)
+median_last_five <- median(y_cube[(length(y_cube)-4):length(y_cube)])
+print(median_last_five)
+```
+#Q1c (10 points)
+
+For a given factor variable
+factorVar <- factor(c("2.5", "7.1", "6.3", "4.8")) in R or
+factorVar = ["2.5", "7.1", "6.3", "4.8"] in Python ,
+Would it be correct to use the following commands to convert factor to number?
+as.numeric(factorVar) in R or map(float, factorVar) in Python.
+If not, explain your answer and provide the correct one.
+
+```{r}
+###Answer: No, it would not be correct to use as.numeric(factorVar) in R or map(float, factorVar) in Python directly.
+
+###Explanation: In R, if you use as.numeric() on a factor variable, it won't provide the numeric values of the levels. Instead, it will return the internal integer codes R uses to denote the factor levels.To convert a factor to numeric correctly, you should first convert it to character and then to numeric in R. Like that:
+
+factorVar <- factor(c("2.5", "7.1", "6.3", "4.8"))
+numericVar <- as.numeric(as.character(factorVar))
+```
+##Q1d (10 points)
+
+A comma-separated values file dataset.csv consists of missing values represented by Not A Number (null) and question mark (?). Read this type of file in R or Python and preprocess the missing values.
+
+NOTE: Please ensure you have saved the dataset.csv file in your current working directory.
+
+```{r}
+data <- read.csv("C:/Users/emine/OneDrive/Masaüstü/ASSIGNMENT1-CIND123/dataset.csv", na.strings = c("null", "?"))
+for(i in which(sapply(data, is.numeric))){
+  data[is.na(data[,i]), i] <- mean(data[,i], na.rm = TRUE)
+}
+```
+
+Print the head of the file to ensure everything is correct. DO NOT print the whole file.
+
+```{r}
+head(data)
+```
+#Question 2 (50 points)
+
+##Q2a (15 points)
+
+Compute: $$\sum_{n=4}^{25} \frac{(−1)^{n+1}}{(2n+1)!}$$
+HINT: Use factorial(n) in R or math.factorial(n) in Python to compute .
+  
+
+```{r}
+# Load the factorial function
+library(gmp) # for large factorials
+```
+
+```{r}
+# Define the sum
+sum_result <- 0
+```
+```{r}
+# Compute the sum
+for (n in 4:25) {
+  term <- ((-1)^(n+1)) / factorial(2*n + 1)
+  sum_result <- sum_result + term
+}
+```
+```{r}
+# Print the result
+print(sum_result)
+```
+##Q2b (15 points)
+  
+
+Compute: 	$$\prod_{x = 2}^{6} (3n+\frac{2}{3^n})$$
+
+  
+NOTE: The symbol represents multiplication.
+  
+```{r}
+# Initialize the product result
+product_result <- 1
+```
+```{r}
+# Loop through n from 2 to 6
+for (n in 2:6) {
+    term <- 3 * n + 2 / (3^n)
+    product_result <- product_result * term
+  }
+```
+```{r}
+# Print the result
+print(product_result)
+```
+Q2a and Q2b Guidance
+
+For Q2a and Q2b, you'll need to apply basic mathematical concepts in R or Python. If you understand how to code in R or Python and the basic math operations (like
+factorial, powers, sums, and products), you're all set!
+Example for Understanding: Let's start with a simpler example: Compute the sum of the first 5 square numbers. In mathematical terms, this is:
+which translates to .
+
+  In R, you could solve this by:
+  
+numbers <- 1:5 # Create a vector of numbers 1 to 5
+squared_numbers <- numbers^2 # Square each element of the vector
+sum_squares <- sum(squared_numbers) # Sum up the squared numbers
+print(sum_squares)
+
+  In Python, you could solve this by:
+  
+numbers = range(1, 6) # Create a list of numbers from 1 to 5
+squared_numbers = [n**2 for n in numbers] # Square each element of the list
+sum_squares = sum(squared_numbers) # Sum up the squared numbers
+print(sum_squares)
+
+Now, come back to Q2a and Q2b. Your task in those questions is similar. You'll use loops to iterate over a range of numbers, applying the specified mathematical operations at each step. Remember to use built-in functions like factorial() , sum() , and prod() in R, or math.factorial() , sum() , and math.prod() in Python when needed.
+
+
+#Q2c (10 points)
+
+Describe what the following R command does: rep(1:3, each = 2)
+NOTE: If you answer the questions in Python, provide an equivalent command and explain its behavior.
+
+```{r}
+###Answer: The R command rep(1:3, each = 2) generates a vector that repeats each of the numbers from 1 to 3 twice.
+
+###Explanation: The rep() function in R is used to replicate the values in x. The each argument specifies how many times each element should be repeated. So, rep(1:3, each = 2) means "repeat each of the numbers from 1 to 3 twice". The output of this command would be a vector: 1, 1, 2, 2, 3, 3.
+```
+
+#Q2d (10 points)
+
+Describe the purpose of is.logical() , is.character() , is.numeric() , and is.na() functions in R.
+In Python, describe the purpose of isinstance() , type() , and pd.isna() functions from the pandas library.
+Please use x <- c("a", FALSE, "b", NA, 2, TRUE) in R or x = ["a", False, "b", None, 2, True] in Python to explain your description
+
+```{r}
+x <- c("a", FALSE, "b", NA, 2, TRUE)
+
+is.logical(x)   # Checks if all elements are logical
+is.character(x) # Checks if all elements are character strings
+is.numeric(x)   # Checks if all elements are numeric
+is.na(x)        # Checks for NA values in the vector
+```
+
