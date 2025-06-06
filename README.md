@@ -34,4 +34,4 @@ This assignment strengthened my understanding of R syntax and logic for data ana
 
 Author: Emine Uysal
 CIND_123_Data-Analytics-Basic-Methods :Assignment 1
-Date: December 2024
+Date: July 2024
